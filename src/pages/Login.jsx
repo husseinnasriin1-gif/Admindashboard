@@ -17,7 +17,7 @@ function Login() {
     setSuccessMessage("");
 
     try {
-      const response = await fetch("adminbackend-production-f7a6.up.railway.app/login", {
+      const response = await fetch("https://adminbackend-production-f7a6.up.railway.app/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
