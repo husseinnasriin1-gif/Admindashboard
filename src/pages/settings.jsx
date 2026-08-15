@@ -6,7 +6,7 @@ function settings() {
     const [loading, setLoading] = useState(true);
    // const file = e.target.files[0]; 
 
-    const BACKEND_URL = 'http://localhost:8080/api/settings';
+    const BACKEND_URL = 'https://adminbackend-production-f7a6.up.railway.app/api/settings';
 
     const fetchSettingsData = async () => {
         try {

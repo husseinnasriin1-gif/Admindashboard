@@ -9,7 +9,7 @@ function Resource_library() {
 
 
     // Target backend location directly
-    const BACKEND_URL = 'http://localhost:8080';
+    const BACKEND_URL = 'https://adminbackend-production-f7a6.up.railway.app';
 
     // 2. Fetch live data metrics from the express REST architecture
     const fetchResourceData = async () => {

@@ -20,7 +20,7 @@ function CourseManager() {
 
   const fetchCourses = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/courses");
+      const response = await fetch("https://adminbackend-production-f7a6.up.railway.app/api/courses");
       const data = await response.json();
       if (response.ok) {
         setCourses(data.courses);
