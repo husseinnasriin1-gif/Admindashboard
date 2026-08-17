@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+const API_BASE = "https://adminbackend-production-f7a6.up.railway.app/api/courses";
 
 function CourseManager() {
   // 1. Core Data States
@@ -19,54 +20,54 @@ function CourseManager() {
   }, []);
 
   const fetchCourses = async () => {
-    try {
-      const response = await fetch("https://adminbackend-production-f7a6.up.railway.app/api/courses");
-      const data = await response.json();
-      if (response.ok) {
-        setCourses(data.courses);
-        setStats(data.stats);
-      }
-    } catch (error) {
-      console.error("Error loading courses:", error);
-    } finally {
-      setLoading(false);
+  try {
+    const response = await fetch(API_BASE);
+    const data = await response.json();
+    if (response.ok) {
+      setCourses(data.courses);
+      setStats(data.stats);
     }
-  };
+  } catch (error) {
+    console.error("Error loading courses:", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   // 3. Handle CRUD Submissions
-  const handleActionSubmit = async (e) => {
-    e.preventDefault();
-    let url = "http://localhost:8080/api/courses";
-    let method = "POST";
-    let body = JSON.stringify({ name: courseName, status: courseStatus });
+ const handleActionSubmit = async (e) => {
+  e.preventDefault();
+  let url = API_BASE;
+  let method = "POST";
+  let body = JSON.stringify({ name: courseName, status: courseStatus });
 
-    if (modalType === "edit") {
-      url = `http://localhost:8080/api/courses/${selectedCourse.id}`;
-      method = "PUT";
-    } else if (modalType === "delete") {
-      url = `http://localhost:8080/api/courses/${selectedCourse.id}`;
-      method = "DELETE";
-      body = null;
+  if (modalType === "edit") {
+    url = `${API_BASE}/${selectedCourse.id}`;
+    method = "PUT";
+  } else if (modalType === "delete") {
+    url = `${API_BASE}/${selectedCourse.id}`;
+    method = "DELETE";
+    body = null;
+  }
+
+  try {
+    const response = await fetch(url, {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body,
+    });
+
+    if (response.ok) {
+      closeModal();
+      fetchCourses();
+    } else {
+      const data = await response.json();
+      alert(data.message || "Action failed");
     }
-
-    try {
-      const response = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body,
-      });
-
-      if (response.ok) {
-        closeModal();
-        fetchCourses(); // Refresh live table list layout data
-      } else {
-        const data = await response.json();
-        alert(data.message || "Action failed");
-      }
-    } catch (error) {
-      console.error("Action handler crash:", error);
-    }
-  };
+  } catch (error) {
+    console.error("Action handler crash:", error);
+  }
+};
 
   const openModal = (type, course = null) => {
     setModalType(type);
