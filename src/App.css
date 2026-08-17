@@ -1,3 +1,8 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* prevents the whole document from scrolling */
+}
 /* ==========================================================================
    1. MAIN APPLAYOUT & CONTAINERS
    ========================================================================== */
@@ -6,12 +11,11 @@ body {
   font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* Force layout to span absolute viewport dimensions */
 .layout {
   display: flex;
   height: 100vh;
-  width: 100vw;
-  overflow: hidden; /* Stops screen-breaking outer scrollbars */
+  width: 100%;   
+  overflow: hidden;
 }
 
 /* Left side persistent navigation wrapper */
@@ -24,15 +28,16 @@ body {
   flex-shrink: 0; /* Prevents sidebar squishing on small widths */
 }
 
-/* Right side page window */
+
 .main-content {
   flex-grow: 1;
   height: 100%;
-  overflow-y: auto;   /* Normal top-to-bottom scrollbar */
-  overflow-x: hidden; /* REMOVES HORIZONTAL SCROLLBAR */
-  min-width: 0;       /* Force flex child components to shrink safely */
-  background-color: #f4f6f9; /* Soft ash page backdrop */
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-width: 0;
+  background-color: #f4f6f9;
   box-sizing: border-box;
+  scrollbar-gutter: stable; /* ← reserves scrollbar space always */
 }
 
 
@@ -460,6 +465,7 @@ span.status.inactive {
    7. ADMIN LOGIN SCREEN INTERFACE
    ========================================================================== */
 /* Layout wrapper to safely center the card when Navbar is hidden */
+
 .auth-content {
   display: flex;
   justify-content: center;
